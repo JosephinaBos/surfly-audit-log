@@ -41,15 +41,32 @@
     (window,document,'script','Surfly');
 
 
-    Surfly.init({
-        widget_key: '0c17c102b943457a82838fe64a5a0a0d'
-    }, function(init) {
+    Surfly.init({widget_key: '0c17c102b943457a82838fe64a5a0a0d'}, function(init) {
         if (init.success) {
-          // display the default Surfly button
-          Surfly.button();
-          // apply audit log functionality
+            // display the default Surfly button
+            Surfly.button();
+
+            if (Surfly.isInsideSession) {
+                // apply audit log functionality
+                var currentdate = new Date();
+                var datetime = currentdate.getDay() + "/"+currentdate.getMonth()
+                + "/" + currentdate.getFullYear() + " @ "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+                Surfly.session()
+                .on('session_queued'), function(session, event) {
+                    var customerDate = Date.now()
+                    Surfly.currentSession.log("Customer was queued on:" + currentdate)
+                }
+                .on('viewer_joined', function(session, event) {
+                    // if a viewer joins and they are the first then redirect to a page of your choice
+                    var waitingTime = (Date.now() - customerDate)
+                    Surfly.currentSession.log("Agent joined after" + waitingTime + "seconds")
+                }
+            }   
         }
-    });
+    });     
     </script>
 </body>
 </html>
