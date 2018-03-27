@@ -46,8 +46,8 @@
             // display the default Surfly button
             Surfly.button();  
                 // apply audit log functionality
-            var currentDate = Surfly.on('session_queued'), function(session, event){
-                Date.now();
+            var currentDate = Surfly.on('session_queued'), function(session, event) {
+                return Date.now();
             }
 
             // var dateTime = currentDate.getDay() + "/"+currentDate.getMonth()
