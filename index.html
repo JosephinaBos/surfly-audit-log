@@ -42,29 +42,32 @@
 
 
     Surfly.init({widget_key: '0c17c102b943457a82838fe64a5a0a0d'}, function(init) {
-        if (init.success) {
+        if (init.success && !Surfly.isInsideSession) {
             // display the default Surfly button
-            Surfly.button();
-
-            if (Surfly.isInsideSession) {
+            Surfly.button();  
                 // apply audit log functionality
-                var currentdate = new Date();
-                var datetime = currentdate.getDay() + "/"+currentdate.getMonth()
-                + "/" + currentdate.getFullYear() + " @ "
-                + currentdate.getHours() + ":"
-                + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+            var currentDate = Surfly.on('session_queued'), function(session, event){
+                Date.now();
+            }
 
-                Surfly.on('session_queued'), function(session, event) {
-                    var customerDate = Date.now()
-                    Surfly.currentSession.log("Customer was queued on:" + currentdate)
-                }.on('viewer_joined'), function(session, event) {
-                    // if a viewer joins and they are the first then redirect to a page of your choice
-                    var waitingTime = (Date.now() - customerDate)
-                    Surfly.currentSession.log("Agent joined after" + waitingTime + "seconds")
-                }
-            }   
+            // var dateTime = currentDate.getDay() + "/"+currentDate.getMonth()
+            // + "/" + currentDate.getFullYear() + " @ "
+            // + currentDate.getHours() + ":"
+            // + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+
+            Surfly.on('viewer_joined'), function(session, event) {
+                var waitingTime = (Date.now() - currentDate)
+                Surfly.currentSession.log("Agent joined after " + waitingTime + " seconds")
+            }
+
+            // Surfly.on('session_queued'), function(session, event) {
+            //     Surfly.currentSession.log("Customer was queued on: " + dateTime)
+            // }.on('viewer_joined'), function(session, event) {
+            //     var waitingTime = (Date.now() - currentDate)
+            //     Surfly.currentSession.log("Agent joined after " + waitingTime + " seconds")
+            // }
         }
-    });     
+    });
     </script>
 </body>
 </html>
