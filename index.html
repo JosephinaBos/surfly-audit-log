@@ -54,12 +54,10 @@
                 + currentdate.getHours() + ":"
                 + currentdate.getMinutes() + ":" + currentdate.getSeconds();
 
-                Surfly.session()
-                .on('session_queued'), function(session, event) {
+                Surfly.on('session_queued'), function(session, event) {
                     var customerDate = Date.now()
                     Surfly.currentSession.log("Customer was queued on:" + currentdate)
-                }
-                .on('viewer_joined'), function(session, event) {
+                }.on('viewer_joined'), function(session, event) {
                     // if a viewer joins and they are the first then redirect to a page of your choice
                     var waitingTime = (Date.now() - customerDate)
                     Surfly.currentSession.log("Agent joined after" + waitingTime + "seconds")
