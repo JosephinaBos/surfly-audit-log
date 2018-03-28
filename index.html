@@ -53,22 +53,14 @@
 
             Surfly.on('session_queued', myfun);
 
-            // var dateTime = currentDate.getDay() + "/"+currentDate.getMonth()
-            // + "/" + currentDate.getFullYear() + " @ "
-            // + currentDate.getHours() + ":"
-            // + currentDate.getMinutes() + ":" + currentDate.getSeconds();
-
             Surfly.on('viewer_joined', function(session, event) {
                 var waitingTime = ((Date.now() - currentDate) / 1000)
                 session.log("Agent joined after " + waitingTime + " seconds")
             })
 
-            // Surfly.on('session_queued'), function(session, event) {
-            //     Surfly.currentSession.log("Customer was queued on: " + dateTime)
-            // }.on('viewer_joined'), function(session, event) {
-            //     var waitingTime = (Date.now() - currentDate)
-            //     Surfly.currentSession.log("Agent joined after " + waitingTime + " seconds")
-            // }
+            Surfly.on('file_download', function(session, event) {
+                session.log("A file with the file name: " + "'" + event.data.filename + "'" + " was downloaded")
+            })
         }
     });
     </script>
