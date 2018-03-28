@@ -46,9 +46,11 @@
             // display the default Surfly button
             Surfly.button();  
                 // apply audit log functionality
-            var currentDate = Surfly.on('session_queued', function(session, event) {
-                return Date.now();
-            })
+            var currentDate;
+            var myfun = function(session, event) {
+                currentDate = Date.now();
+            };
+            Surfly.on('session_queued', myfun);
 
             // var dateTime = currentDate.getDay() + "/"+currentDate.getMonth()
             // + "/" + currentDate.getFullYear() + " @ "
@@ -57,7 +59,7 @@
 
             Surfly.on('viewer_joined', function(session, event) {
                 var waitingTime = (Date.now() - currentDate)
-                Surfly.currentSession.log("Agent joined after " + waitingTime + " seconds")
+                session.log("Agent joined after " + waitingTime + " seconds")
             })
 
             // Surfly.on('session_queued'), function(session, event) {
