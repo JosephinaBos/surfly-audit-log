@@ -58,7 +58,7 @@
             // + currentDate.getMinutes() + ":" + currentDate.getSeconds();
 
             Surfly.on('viewer_joined', function(session, event) {
-                var waitingTime = (Date.now() - currentDate)
+                var waitingTime = (Date.now() - currentDate / 1000)
                 session.log("Agent joined after " + waitingTime + " seconds")
             })
 
