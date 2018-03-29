@@ -59,7 +59,7 @@
             })
 
             Surfly.on('file_download', function(session, event) {
-                session.log("A file with the file name: " + "'" + event.data.filename + "'" + " was downloaded")
+                session.log("A file with the file name: " + "'" + event.filename + "'" + " was downloaded")
             })
         }
     });
